@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="module_nodeexpress" default="compile.module.nodeexpress">
+  <dirname property="module.nodeexpress.basedir" file="${ant.file.module_nodeexpress}"/>
+  
+  <property name="module.jdk.home.nodeexpress" value=""/>
+  <property name="module.jdk.bin.nodeexpress" value=""/>
+  <property name="module.jdk.classpath.nodeexpress" value=""/>
+  
+  <property name="compiler.args.nodeexpress" value="-encoding UTF-8 -source 1.6 ${compiler.args}"/>
+  
+  <property name="nodeexpress.output.dir" value="core-temp-server/../out/production/NodeExpress"/>
+  <property name="nodeexpress.testoutput.dir" value="core-temp-server/../out/test/NodeExpress"/>
+  
+  <path id="nodeexpress.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="nodeexpress.module.production.classpath"/>
+  
+  <path id="nodeexpress.runtime.production.module.classpath">
+    <pathelement location="${nodeexpress.output.dir}"/>
+  </path>
+  
+  <path id="nodeexpress.module.classpath">
+    <pathelement location="${nodeexpress.output.dir}"/>
+  </path>
+  
+  <path id="nodeexpress.runtime.module.classpath">
+    <pathelement location="${nodeexpress.testoutput.dir}"/>
+    <pathelement location="${nodeexpress.output.dir}"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.nodeexpress">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.nodeexpress">
+    <patternset refid="excluded.from.module.nodeexpress"/>
+  </patternset>
+  
+  
+  <target name="compile.module.nodeexpress" depends="compile.module.nodeexpress.production,compile.module.nodeexpress.tests" description="Compile module NodeExpress"/>
+  
+  <target name="compile.module.nodeexpress.production" depends="register.custom.compilers" description="Compile module NodeExpress; production classes"/>
+  
+  <target name="compile.module.nodeexpress.tests" depends="register.custom.compilers,compile.module.nodeexpress.production" description="compile module NodeExpress; test classes" unless="skip.tests"/>
+  
+  <target name="clean.module.nodeexpress" description="cleanup module">
+    <delete dir="${nodeexpress.output.dir}"/>
+    <delete dir="${nodeexpress.testoutput.dir}"/>
+  </target>
+</project>

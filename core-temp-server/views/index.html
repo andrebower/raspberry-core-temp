@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Raspberry Temp</title>
+    <meta name="viewport" content="width=device-width, user-scalable=yes">
+    <link href="stylesheets/style.css" rel="stylesheet" type="text/css">
+    <link href="javascripts/flot/examples/examples.css" rel="stylesheet" type="text/css">
+    <script  type="text/javascript" src="javascripts/flot/jquery.js"></script>
+    <script  type="text/javascript" src="javascripts/flot/jquery.flot.js"></script>
+    <script  type="text/javascript" src="javascripts/flot/jquery.flot.time.js"></script>
+</head>
+<body>
+<div id="placeholder" style="width: 100%; height: 100%"></div>
+<script>
+
+
+    function plot() {
+        var series = [];
+        var placeholder = $("#placeholder");
+        var options = {
+            xaxis: {
+                mode: "time",
+                minTickSize: [1, "hour"],
+                twelveHourClock: true
+            },
+            yaxes: [
+                {
+                    min: 0,
+                    max: 100
+                },
+                {
+                    min: 0,
+                    max: 100
+                }
+            ]
+        };
+        $.plot("#placeholder", series, options);
+        $.getJSON("/tempsPI",function (data) {
+            series.push(
+                    {
+                        data: data.values,
+                        label: "Raspbian",
+                        color: "rgba(99, 194, 30,1)"
+
+                    }
+            );
+            $.plot("#placeholder", series, options);
+        }).fail(function (jqXHR, textStatus, errorThrown) {
+            console.log("Pi not available");
+        });
+        $.getJSON("/tempsXBMC",function (data) {
+            series.push(
+                    {
+                        data: data.values,
+                        label: "XBMC",
+                        color: "rgba(99, 20, 30,1)"
+
+                    }
+            );
+            $.plot("#placeholder", series, options);
+        }).fail(function (jqXHR, textStatus, errorThrown) {
+            console.log("XBMC not available");
+        });
+    }
+    plot();
+    setInterval(plot, 60000);
+
+
+</script>
+</body>
+</html>
