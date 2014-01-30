@@ -1,3 +1,6 @@
 #!/bin/bash
-node core-temp-service/tempservice.js  2>&1 > core-temp-service/logfile &
-node core-temp-server/app.js 2>&1 > core-temp-server/logfile &
+killall node
+cd core-temp-service/
+node tempservice.js  2>&1 > logfile &
+cd ../core-temp-server/
+node app.js 2>&1 > logfile &
