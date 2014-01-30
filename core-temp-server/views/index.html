@@ -14,29 +14,29 @@
 <script>
 
 
-    function plot() {
-        var series = [];
-        var placeholder = $("#placeholder");
-        var options = {
-            xaxis: {
-                mode: "time",
-                minTickSize: [1, "hour"],
-                twelveHourClock: true
+    var series = [];
+    var placeholder = $("#placeholder");
+    var options = {
+        xaxis: {
+            mode: "time",
+            minTickSize: [1, "hour"],
+            twelveHourClock: true
+        },
+        yaxes: [
+            {
+                min: 40,
+                max: 55
             },
-            yaxes: [
-                {
-                    min: 40,
-                    max: 55
-                },
-                {
-                    min: 0,
-                    max: 100
-                }
-            ]
-        };
-        $.plot("#placeholder", series, options);
+            {
+                min: 0,
+                max: 100
+            }
+        ]
+    };
+    $.plot("#placeholder", series, options);
+    function plot() {
         $.getJSON("/tempsPI",function (data) {
-            series.push(
+            series[0]=(
                     {
                         data: data.values,
                         label: "Raspbian",
@@ -49,7 +49,7 @@
             console.log("Pi not available");
         });
         $.getJSON("/tempsXBMC",function (data) {
-            series.push(
+            series[1]=(
                     {
                         data: data.values,
                         label: "XBMC",
