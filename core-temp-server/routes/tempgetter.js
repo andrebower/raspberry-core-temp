@@ -9,13 +9,10 @@ function getJsonFromUrl(url, res) {
 
         result.on('end', function () {
             res.send(JSON.stringify(JSON.parse(body)));
-            return;
-
         });
     }).on('error', function (e) {
-        console.log("Got error: ", e);
+        res.send("");
     })
-    res.send("");
 }
 /**
  * Created by andrebauer on 30.01.14.
