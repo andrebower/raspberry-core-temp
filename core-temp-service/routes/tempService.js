@@ -35,11 +35,14 @@ exports.coreTemps = function(req, res){
 
     var jsonTemps = {values:[]};
     var time = new Date().getTime() - 1000*60*60*12;
-    db.all("SELECT timestamp ,temp  FROM temps WHERE timestamp > "+ time +" ORDER BY timestamp", function(err, rows) {
-        rows.forEach(function (row) {
-            jsonTemps.values.push([row.timestamp,row.temp]);
+
+    db.serialize(function() {
+        db.all("SELECT timestamp ,temp  FROM temps WHERE timestamp > "+ time +" ORDER BY timestamp", function(err, rows) {
+            rows.forEach(function (row) {
+                jsonTemps.values.push([row.timestamp,row.temp]);
+            });
+            res.send(JSON.stringify(jsonTemps));
         });
-        res.send(JSON.stringify(jsonTemps));
     });
     db.close();
 
@@ -67,4 +70,5 @@ function writeToDB(temp){
         stmt.run(new Date().getTime(),temp);
         stmt.finalize();
     });
+    db.close();
 }
