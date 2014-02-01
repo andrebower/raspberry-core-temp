@@ -22,16 +22,11 @@
             minTickSize: [1, "hour"],
             twelveHourClock: true
         },
-        yaxes: [
-            {
-                min: 40,
-                max: 55
-            },
-            {
-                min: 0,
-                max: 100
-            }
-        ]
+        yaxis:{
+            min: 40,
+            max: 55
+        }
+
     };
     $.plot("#placeholder", series, options);
     function plot() {
