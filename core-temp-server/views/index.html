@@ -9,7 +9,9 @@
     <script  type="text/javascript" src="javascripts/flot/jquery.flot.js"></script>
     <script  type="text/javascript" src="javascripts/flot/jquery.flot.time.js"></script>
     <script  type="text/javascript" src="javascripts/flot/jquery.flot.resize.js"></script>
+    <script  type="text/javascript" src="javascripts/flot/jquery.flot.axislabels.js"></script>
     <script  type="text/javascript" src="javascripts/date.js"></script>
+
 </head>
 <body>
 <div id="placeholder" style="width: 100%; height: 100%"></div>
@@ -35,6 +37,10 @@
             mode: "time",
             minTickSize: [1, "hour"],
             twelveHourClock: true
+        },
+        yaxis: {
+            axisLabel: "°C",
+            axisLabelColour: "black"
         }
     };
     $.plot("#placeholder", series, options);
