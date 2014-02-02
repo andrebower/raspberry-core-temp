@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="JavaScriptLibraryMappings">
+    <file url="file://$PROJECT_DIR$/core-temp-server" libraries="{Node.js Dependencies for core-temp-server}" />
+    <file url="file://$PROJECT_DIR$/core-temp-service" libraries="{Node.js Dependencies for core-temp-service}" />
+  </component>
+</project>
+

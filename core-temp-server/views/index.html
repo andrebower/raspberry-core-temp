@@ -8,6 +8,7 @@
     <script  type="text/javascript" src="javascripts/flot/jquery.js"></script>
     <script  type="text/javascript" src="javascripts/flot/jquery.flot.js"></script>
     <script  type="text/javascript" src="javascripts/flot/jquery.flot.time.js"></script>
+    <script  type="text/javascript" src="javascripts/date.js"></script>
 </head>
 <body>
 <div id="placeholder" style="width: 100%; height: 100%"></div>
@@ -17,6 +18,18 @@
     var series = [];
     var placeholder = $("#placeholder");
     var options = {
+        series: {
+            lines: {
+                show: true
+            },
+            points: {
+                show: true
+            }
+        },
+        grid: {
+            hoverable: true,
+            clickable: true
+        },
         xaxis: {
             mode: "time",
             minTickSize: [1, "hour"],
@@ -52,6 +65,28 @@
             console.log("XBMC not available");
         });
     }
+    $("<div id='tooltip'></div>").css({
+        position: "absolute",
+        display: "none",
+        border: "1px solid #fdd",
+        padding: "2px",
+        "background-color": "#fee",
+        opacity: 0.80
+    }).appendTo("body");
+
+    $("#placeholder").bind("plothover", function (event, pos, item) {
+
+            if (item) {
+                var x = item.datapoint[0],
+                        y = item.datapoint[1].toFixed(2);
+
+                $("#tooltip").html(item.series.label + " Temp  at " + new Date(x).toString("HH:mm")  + " = " + y +"°C")
+                        .css({top: item.pageY+5, left: item.pageX+5})
+                        .fadeIn(200);
+            } else {
+                $("#tooltip").hide();
+            }
+    });
     plot();
     setInterval(plot, 60000);
 
