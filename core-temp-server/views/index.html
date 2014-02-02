@@ -8,6 +8,7 @@
     <script  type="text/javascript" src="javascripts/flot/jquery.js"></script>
     <script  type="text/javascript" src="javascripts/flot/jquery.flot.js"></script>
     <script  type="text/javascript" src="javascripts/flot/jquery.flot.time.js"></script>
+    <script  type="text/javascript" src="javascripts/flot/jquery.flot.resize.js"></script>
     <script  type="text/javascript" src="javascripts/date.js"></script>
 </head>
 <body>
@@ -37,8 +38,14 @@
         }
     };
     $.plot("#placeholder", series, options);
+    function dataHasValues(data) {
+        return data != null && data.values != null;
+    }
     function plot() {
         $.getJSON("/tempsPI",function (data) {
+            if(!dataHasValues(data)){
+                return;
+            }
             series[0]=(
                     {
                         data: data.values,
@@ -52,6 +59,9 @@
             console.log("Pi not available");
         });
         $.getJSON("/tempsXBMC",function (data) {
+            if(!dataHasValues(data)){
+                return;
+            }
             series[1]=(
                     {
                         data: data.values,
@@ -87,6 +97,7 @@
                 $("#tooltip").hide();
             }
     });
+
     plot();
     setInterval(plot, 60000);
 
