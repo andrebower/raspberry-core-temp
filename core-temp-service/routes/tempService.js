@@ -40,6 +40,9 @@ exports.coreTemps = function(req, res){
 
     db.serialize(function() {
         db.all("SELECT timestamp ,temp  FROM temps WHERE timestamp > "+ time +" ORDER BY timestamp", function(err, rows) {
+            if(rows == undefined){
+                res.send("");
+            }
             rows.forEach(function (row) {
                 jsonTemps.values.push([row.timestamp,row.temp]);
             });
