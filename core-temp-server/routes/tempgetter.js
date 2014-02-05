@@ -6,7 +6,10 @@ function getJsonFromUrl(url, res) {
         result.on('data', function (chunk) {
             body += chunk;
         });
-
+        if(body == ''){
+            res.send("");
+            return;
+        }
         result.on('end', function () {
             res.send(JSON.stringify(JSON.parse(body)));
         });
